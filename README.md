@@ -1,4 +1,4 @@
-# Docker Instant Development
+# Docker as Instant Development
 
 Docker Instant Development demonstrates real-time development using Docker containers. By seamlessly connecting your local path to a Docker container, you can develop without the hassle of rebuilding Docker images for every code change. This accelerates development within an isolated Docker environment, ensuring consistent performance across local, development, testing, and production environments.
 
