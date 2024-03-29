@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  cSharp:
+    build:
+      context: ./c#
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8080"
+    volumes:
+      - $PWD/c#/TodoApi:/app
+  
+  golang:
+    build:
+      context: ./golang
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8080"
+    volumes:
+      - $PWD/golang:/app
+
+  java:
+    build:
+      context: ./java
+      dockerfile: Dockerfile
+    ports:
+      - "8083:8080"
+    volumes:
+      - $PWD/java:/app
+
+  python:
+    build:
+      context: ./python
+      dockerfile: Dockerfile
+    ports:
+      - "8084:8080"
+    volumes:
+      - $PWD/python:/app
+
+  rust:
+    build:
+      context: ./rust
+      dockerfile: Dockerfile
+    ports:
+      - "8085:8080"
+    volumes:
+      - $PWD/rust:/app
