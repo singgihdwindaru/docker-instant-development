@@ -1,24 +1,20 @@
-# https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile.alpine
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS build
+#https://devblogs.microsoft.com/dotnet/improving-multiplatform-container-support/
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS debug
 ARG TARGETARCH
+ENV targetArch=$TARGETARCH
+
 WORKDIR /source
+COPY TodoApi/TodoApi.csproj .
+RUN dotnet restore --runtime $targetArch
 
-# copy csproj and restore as distinct layers
-COPY TodoApi/*.csproj .
-RUN dotnet restore -a $TARGETARCH
-
-# copy and publish app and libraries
+FROM debug AS publish
 COPY TodoApi/. .
-RUN dotnet publish --no-restore -a $TARGETARCH -o /app
+RUN dotnet publish --no-restore -c Release -o /app/publish
 
+FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine as final
+ENV ASPNETCORE_URLS http://*:8080
 
-# Enable globalization and time zones:
-# https://github.com/dotnet/dotnet-docker/blob/main/samples/enable-globalization.md
-# final stage/image
-FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine
 EXPOSE 8080
 WORKDIR /app
-COPY --from=build /app .
-# Uncomment to enable non-root user
-# USER $APP_UID
+COPY --from=publish /app/publish .
 ENTRYPOINT ["./TodoApi"]

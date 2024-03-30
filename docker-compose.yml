@@ -1,15 +1,25 @@
 version: "3.8"
 
 services:
-  cSharp:
+  csharp:  
+    image: docker-instant-development/csharp:debug
     build:
       context: ./c#
       dockerfile: Dockerfile
+      target: debug
+      platforms:
+        - "linux/amd64"
+      args:
+        - TARGETARCH=linux-musl-x64
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
     ports:
       - "8081:8080"
     volumes:
-      - $PWD/c#/TodoApi:/app
-  
+      - $PWD/c#/TodoApi:/source
+    command: >
+       /bin/sh -c "dotnet run"
+
   golang:
     build:
       context: ./golang
