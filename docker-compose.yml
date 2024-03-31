@@ -21,14 +21,18 @@ services:
        /bin/sh -c "dotnet run"
 
   golang:
+    image: docker-instant-development/golang-app:debug
     build:
       context: ./golang
       dockerfile: Dockerfile
+      target: debug
     ports:
       - "8082:8080"
     volumes:
-      - $PWD/golang:/app
-
+      - $PWD/golang:/source
+    command: >
+      /bin/sh -c "go run ."
+      
   java:
     build:
       context: ./java

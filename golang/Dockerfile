@@ -1,22 +1,20 @@
-FROM golang:alpine AS builder
-
-LABEL stage=gobuilder
+FROM golang:alpine AS debug
 
 ENV CGO_ENABLED=0
 ENV GOOS=linux
 
-RUN apk update --no-cache 
-RUN apk add --no-cache git
+WORKDIR /source
+# Download Go modules
+COPY go.mod go.sum ./
+RUN go mod download
 
-WORKDIR /build
 
+FROM debug as publish
 COPY . .
-
-RUN go mod tidy
-RUN go build -o golang-app .
+RUN go build -o /app/golang-app .
 
 FROM alpine as final
 WORKDIR /app
 EXPOSE 8080
-COPY --from=debug build/golang-app /app/golang-app
+COPY --from=publish /app/golang-app /app/golang-app
 CMD ["./golang-app"]
