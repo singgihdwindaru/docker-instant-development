@@ -1,4 +1,4 @@
-docker-build--debug:
+docker-build-debug:
 	docker build \
   	--target=debug \
   	--platform=linux/amd64 \
@@ -7,7 +7,7 @@ docker-build--debug:
 
 docker-run-debug:
 	docker run -it -d \
-	-v ${PWD}/TodoApi:/source \
+	-v ${PWD}/TodoApi:/src \
 	-p 8081:8080 \
 	-e ASPNETCORE_URLS='http://+:8080' \
 	--name docker-instant-development-csharp docker-instant-development/csharp:debug \

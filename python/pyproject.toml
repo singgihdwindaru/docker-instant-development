@@ -4,11 +4,11 @@ version = "0.1.0"
 description = ""
 authors = ["singgihdwindaru <singgihlab@gmail.com>"]
 readme = "README.md"
-packages = [{include = "app_py"}]
 
 [tool.poetry.dependencies]
 python = "^3.8"
 flask = "^3.0.2"
+gunicorn = "^21.2.0"
 
 
 [build-system]

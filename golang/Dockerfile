@@ -1,9 +1,11 @@
+# syntax=docker/dockerfile:1
+# Keep this syntax directive! It's used to enable Docker BuildKit
 FROM golang:alpine AS debug
 
 ENV CGO_ENABLED=0
 ENV GOOS=linux
 
-WORKDIR /source
+WORKDIR /src
 # Download Go modules
 COPY go.mod go.sum ./
 RUN go mod download

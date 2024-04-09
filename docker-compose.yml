@@ -16,7 +16,7 @@ services:
     ports:
       - "8081:8080"
     volumes:
-      - $PWD/c#/TodoApi:/source
+      - $PWD/c#/TodoApi:/src
     command: >
        /bin/sh -c "dotnet run"
 
@@ -29,7 +29,7 @@ services:
     ports:
       - "8082:8080"
     volumes:
-      - $PWD/golang:/source
+      - $PWD/golang:/src
     command: >
       /bin/sh -c "go run ."
       
@@ -46,11 +46,14 @@ services:
     build:
       context: ./python
       dockerfile: Dockerfile
+      target: debug
     ports:
       - "8084:8080"
     volumes:
-      - $PWD/python:/app
-
+      - $PWD/python:/src
+    command: >
+      /bin/sh -c "FLASK_APP=main.py python -m flask run --host=0.0.0.0 --port=8080"
+      
   rust:
     build:
       context: ./rust

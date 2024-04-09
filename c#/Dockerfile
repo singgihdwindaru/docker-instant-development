@@ -1,9 +1,11 @@
+# syntax=docker/dockerfile:1
+# Keep this syntax directive! It's used to enable Docker BuildKit
 #https://devblogs.microsoft.com/dotnet/improving-multiplatform-container-support/
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS debug
 ARG TARGETARCH
 ENV targetArch=$TARGETARCH
 
-WORKDIR /source
+WORKDIR /src
 COPY TodoApi/TodoApi.csproj .
 RUN dotnet restore --runtime $targetArch
 

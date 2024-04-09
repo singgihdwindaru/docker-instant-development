@@ -40,3 +40,4 @@ bld/
 
 .mono/
 mynote.txt
+__pycache__/

@@ -8,6 +8,3 @@ def hello():
     # this containered application
     result = 'Hello, World!'
     return result
-
-if __name__ == '__main__':
-    app.run(debug=True)
