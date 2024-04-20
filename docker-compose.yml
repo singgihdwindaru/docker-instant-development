@@ -62,3 +62,14 @@ services:
       - "8085:8080"
     volumes:
       - $PWD/rust:/app
+
+  nodejs:
+    image: docker-instant-development/nodejs-app:debug
+    build:
+      context: ./nodejs
+      dockerfile: Dockerfile
+      target: debug
+    ports:
+      - "3000:3000"
+    volumes:
+      - $PWD/nodejs:/usr/src/app  
