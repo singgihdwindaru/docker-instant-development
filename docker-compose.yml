@@ -72,4 +72,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - $PWD/nodejs:/usr/src/app  
+      - $PWD/nodejs:/src
+      - /src/node_modules
+    command: >
+      /bin/sh -c "npm start"
